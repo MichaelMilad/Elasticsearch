@@ -1,0 +1,6 @@
+SELECT *,
+UNIX_TIMESTAMP(updatedAt) AS unix_ts_in_secs
+FROM `client`
+WHERE `client`.`deleted` = false
+AND (UNIX_TIMESTAMP(updatedAt) > :sql_last_value AND updatedAt < NOW())
+ORDER BY updatedAt ASC

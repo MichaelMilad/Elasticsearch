@@ -1,0 +1,6 @@
+node_modules
+.env
+seeding
+package-lock.json
+elasticsearch-data
+dist

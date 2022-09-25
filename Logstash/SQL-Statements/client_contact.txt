@@ -1,0 +1,18 @@
+SELECT
+`client_contact`.`id`,
+`client_contact`.`key`,
+`client_contact`.`name`,
+`client_contact`.`email`,
+`client_contact`.`signingAuth`,
+`client_contact`.`createdAt`,
+`client_contact`.`updatedAt`,
+`client`.`key` AS `clientKey`,
+UNIX_TIMESTAMP(`client_contact`.`updatedAt`) as unix_ts_in_secs
+FROM `client_contact`
+inner join `client`
+ON
+(`client_contact`.`clientId` = `client`.`id` AND `client`.`deleted` = false)
+WHERE (
+	UNIX_TIMESTAMP(`client_contact`.`updatedAt`) > :sql_last_value
+	AND `client_contact`.`updatedAt` < NOW())
+ORDER BY `client_contact`.`updatedAt` ASC

@@ -1,0 +1,18 @@
+SELECT
+`client_phone`.`id`,
+`client_phone`.`key`,
+`client_phone`.`type`,
+`client_phone`.`number`,
+`client_phone`.`createdAt`,
+`client_phone`.`updatedAt`,
+`client`.`key` AS `clientKey`,
+UNIX_TIMESTAMP(`client_phone`.`updatedAt`) as unix_ts_in_secs
+FROM `client_phone`
+inner join `client`
+ON
+(`client_phone`.`clientId` = `client`.`id` AND `client`.`deleted` = false)
+WHERE (
+	UNIX_TIMESTAMP(`client_phone`.`updatedAt`) > :sql_last_value
+	AND `client_phone`.`updatedAt` < NOW())
+AND `client_phone`.`clientContactId` IS NULL
+ORDER BY `client_phone`.`updatedAt` ASC
