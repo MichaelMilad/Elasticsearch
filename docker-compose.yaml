@@ -47,6 +47,8 @@ services:
       container_name: logstash
       image: logstash:1.0
       restart: always
+      volumes:
+         - ./logstash-data:/usr/share/logstash/data/plugins/inputs/jdbc
       depends_on:
         - elasticsearch
         - mysql
