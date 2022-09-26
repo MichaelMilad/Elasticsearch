@@ -3,4 +3,5 @@ node_modules
 seeding
 package-lock.json
 elasticsearch-data
+logstash-data
 dist
